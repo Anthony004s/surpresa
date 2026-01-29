@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te Amo! Quer Casar Comigo?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: white;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .heart:nth-child(1) {
+            top: 20px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .heart:nth-child(2) {
+            top: 50px;
+            right: 15%;
+            animation-delay: 1s;
+        }
+        
+        .heart:nth-child(3) {
+            bottom: 30px;
+            left: 20%;
+            animation-delay: 2s;
+        }
+        
+        .heart:nth-child(4) {
+            bottom: 10px;
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .photo-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 8px solid #f8bbd9;
+            position: relative;
+        }
+        
+        #photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        #photo:hover {
+            transform: scale(1.03);
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #888;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-placeholder:hover {
+            background: linear-gradient(135deg, #eeeeee 0%, #d5d5d5 100%);
+            transform: scale(1.01);
+        }
+        
+        .photo-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #e91e63;
+        }
+        
+        .photo-placeholder h3 {
+            color: #e91e63;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .photo-instructions {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 15px;
+            max-width: 80%;
+        }
+        
+        .love-message {
+            margin-bottom: 30px;
+            display: none; /* Começa escondido */
+            animation: fadeIn 1s ease;
+        }
+        
+        .love-message.show {
+            display: block;
+        }
+        
+        .love-message span {
+            display: block;
+            font-size: 2.2rem;
+            color: #e91e63;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .love-message p {
+            font-size: 1.8rem;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            display: none; /* Começa escondido */
+        }
+        
+        .button-container.show {
+            display: flex;
+            animation: fadeIn 1s ease;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-hearts {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            color: white;
+        }
+        
+        .btn-hearts:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);
+        }
+        
+        .btn-yes {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+        }
+        
+        .btn-yes:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn-no {
+            background: linear-gradient(to right, #f44336, #c62828);
+            color: white;
+        }
+        
+        .btn-no:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);
+        }
+        
+        /* Estilos para os corações que caem */
+        .falling-heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff4081;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            animation: falling linear forwards;
+            opacity: 0.7;
+        }
+        
+        @keyframes falling {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        /* Estilos para mensagem de resposta */
+        .response-message {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fce4ec;
+            border-radius: 15px;
+            font-size: 1.8rem;
+            color: #e91e63;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Estilos para a etapa de foto */
+        .photo-step {
+            display: block;
+        }
+        
+        .proposal-step {
+            display: none;
+        }
+        
+        .proposal-step.show {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+        
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.3rem;
+            }
+            
+            .love-message span {
+                font-size: 1.8rem;
+            }
+            
+            .love-message p {
+                font-size: 1.5rem;
+            }
+            
+            .photo-container {
+                height: 280px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .photo-placeholder h3 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .love-message span {
+                font-size: 1.5rem;
+            }
+            
+            .love-message p {
+                font-size: 1.3rem;
+            }
+            
+            .photo-container {
+                height: 220px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            
+            .photo-placeholder h3 {
+                font-size: 1.3rem;
+            }
+            
+            .photo-placeholder i {
+                font-size: 3rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="heart">❤️</div>
+            <div class="heart">❤️</div>
+            <div class="heart">❤️</div>
+            <div class="heart">❤️</div>
+            <h1>Para Soraya lindaaaa</h1>
+            <p>Minha surpresa</p>
+        </div>
+        
+        <div class="content">
+            <!-- Etapa 1: Carregar foto -->
+            <div class="photo-step" id="photoStep">
+                <div class="photo-container">
+                    <div class="photo-placeholder" id="photoPlaceholder">
+                        <i class="fas fa-camera"></i>
+                        <h3>Coloque sua foto senha aqui (Você)</h3>
+                        <p>Clique nesta área para selecionar uma foto</p>
+                        <p class="photo-instructions">(Após colocar sua foto, uma mensagem especial aparecerá)</p>
+                    </div>
+                    <img id="photo" src="" alt="Sua Foto" style="display: none;">
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <p style="color: #666; font-size: 1.1rem;">
+                        <i class="fas fa-info-circle"></i> Selecione uma foto sua para continuar
+                    </p>
+                    <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            
+            <!-- Etapa 2: Proposta (aparece após foto) -->
+            <div class="proposal-step" id="proposalStep">
+                <div class="photo-container">
+                    <img id="displayedPhoto" src="" alt="Sua Foto">
+                </div>
+                
+                <div class="love-message" id="loveMessage">
+                    <span>Te amo ❤️</span>
+                    <p>Por favor, quer casar comigo?</p>
+                </div>
+                
+                <div class="button-container" id="buttonContainer">
+                    <button class="btn btn-hearts" id="heartsBtn">
+                        <i class="fas fa-heart"></i> Chuva de Corações
+                    </button>
+                    <button class="btn btn-yes" id="yesBtn">
+                        <i class="fas fa-check-circle"></i> Sim, eu quero!
+                    </button>
+                    <button class="btn btn-no" id="noBtn">
+                        <i class="fas fa-times-circle"></i> Não
+                    </button>
+                </div>
+                
+                <div class="response-message" id="responseMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos do DOM
+        const photoUpload = document.getElementById('photoUpload');
+        const photo = document.getElementById('photo');
+        const displayedPhoto = document.getElementById('displayedPhoto');
+        const photoPlaceholder = document.getElementById('photoPlaceholder');
+        const photoStep = document.getElementById('photoStep');
+        const proposalStep = document.getElementById('proposalStep');
+        const loveMessage = document.getElementById('loveMessage');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const heartsBtn = document.getElementById('heartsBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const responseMessage = document.getElementById('responseMessage');
+        
+        // Configuração para upload de foto
+        photoPlaceholder.addEventListener('click', () => {
+            photoUpload.click();
+        });
+        
+        photoUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Configura as fotos
+                    photo.src = e.target.result;
+                    displayedPhoto.src = e.target.result;
+                    
+                    // Esconde a etapa da foto e mostra a proposta
+                    photoStep.style.display = 'none';
+                    proposalStep.classList.add('show');
+                    loveMessage.classList.add('show');
+                    buttonContainer.classList.add('show');
+                    
+                    // Cria alguns corações para celebrar
+                    createHeartsRain(20);
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Função para criar corações caindo
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = '❤️';
+            
+            // Posição aleatória horizontal
+            const startX = Math.random() * 100;
+            heart.style.left = `${startX}vw`;
+            
+            // Tamanho aleatório
+            const size = 20 + Math.random() * 30;
+            heart.style.fontSize = `${size}px`;
+            
+            // Cor aleatória (tons de rosa/vermelho)
+            const colors = ['#ff4081', '#e91e63', '#f50057', '#ff80ab', '#f06292'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.color = color;
+            
+            // Duração da animação
+            const duration = 3 + Math.random() * 7;
+            heart.style.animationDuration = `${duration}s`;
+            
+            // Adiciona ao corpo
+            document.body.appendChild(heart);
+            
+            // Remove após a animação terminar
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+        
+        // Função para criar muitos corações
+        function createHeartsRain(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    createFallingHeart();
+                }, i * 100); // Espaça a criação dos corações
+            }
+        }
+        
+        // Cria alguns corações iniciais
+        window.addEventListener('load', () => {
+            // Cria alguns corações iniciais
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createFallingHeart();
+                }, i * 500);
+            }
+        });
+        
+        // Botão de chuva de corações
+        heartsBtn.addEventListener('click', () => {
+            // Cria 50 corações de uma vez
+            createHeartsRain(50);
+            
+            // Feedback visual
+            heartsBtn.innerHTML = '<i class="fas fa-heart"></i> Corações em Chuva!';
+            heartsBtn.style.transform = 'scale(1.05)';
+            
+            setTimeout(() => {
+                heartsBtn.innerHTML = '<i class="fas fa-heart"></i> Mais Corações!';
+                heartsBtn.style.transform = 'scale(1)';
+            }, 1000);
+        });
+        
+        // Botão Sim
+        yesBtn.addEventListener('click', () => {
+            responseMessage.textContent = "🎉 Você fez a minha vida completa! Eu te amo! 🎉";
+            responseMessage.style.display = 'block';
+            
+            // Cria uma grande chuva de corações
+            createHeartsRain(100);
+            
+            // Efeito visual no botão
+            yesBtn.innerHTML = '<i class="fas fa-heart"></i> Sim! Para sempre!';
+            yesBtn.style.animation = 'pulse 1s infinite';
+            
+            // Adiciona estilo de pulso
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        
+        // Botão Não (com comportamento divertido)
+        noBtn.addEventListener('mouseover', () => {
+            // Move o botão para uma posição aleatória quando o mouse passa por cima
+            const container = buttonContainer.getBoundingClientRect();
+            const maxX = container.width - noBtn.offsetWidth;
+            const maxY = container.height - noBtn.offsetHeight;
+            
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            
+            noBtn.style.position = 'relative';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            
+            // Cria alguns corações para divertir
+            createHeartsRain(5);
+        });
+        
+        noBtn.addEventListener('click', () => {
+            responseMessage.textContent = "😢 Tudo bem, vou continuar te amando até você mudar de ideia! ❤️";
+            responseMessage.style.display = 'block';
+            
+            // Cria corações mesmo ao clicar em "Não"
+            createHeartsRain(20);
+        });
+        
+        // Cria corações continuamente em segundo plano
+        setInterval(() => {
+            if (Math.random() > 0.7) { // 30% de chance a cada segundo
+                createFallingHeart();
+            }
+        }, 1000);
+        
+        // Instrução para o usuário
+        console.log("Site de proposta carregado! Coloque uma foto para ver a mensagem especial.");
+    </script>
+</body>
+</html>
